@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "*.htm": "html"
+    },
+    "django.templatePaths": ["templates"]
+}
