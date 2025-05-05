@@ -1,6 +1,6 @@
 {% extends "blog/base.html" %}
 
-{% block title %}{{ post.title }}{% endblock title %}
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
     <h1>{{ post.title }}</h1>
@@ -14,9 +14,9 @@
         </a>
     </p>
     {% with comments.count as total_comments %}
-        <h1>
+        <h2>
             {{ total_comments }} comment{{ total_comments|pluralize }}
-        </h1>
+        </h2>
     {% endwith %}
     {% for comment in comments %}
         <div class="comment">
@@ -27,7 +27,7 @@
             {{ comment.body|linebreaks }}
         </div>
     {% empty %}
-        <p>There are no comments</p>
+        <p>There are no comments.</p>
     {% endfor %}
-    {% include 'blog/post/includes/comment_form.html' %}
-{% endblock content %}
+    {% include "blog/post/includes/comment_form.html" %}
+{% endblock %}
