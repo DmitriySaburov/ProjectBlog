@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+# from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
+from django.views.decorators.http import require_POST
 from django.core.mail import send_mail
 from django.conf import settings
 
-from .models import Post
-from .forms import EmailPostForm
+from .models import Post, Comment
+from .forms import EmailPostForm, CommentForm
 
 
 """
@@ -33,7 +34,9 @@ def post_detail(request, year, month, day, post):
                              publish__year=year,
                              publish__month=month,
                              publish__day=day)
-    context = {"post": post}
+    comments = post.comments.filter(active=True)
+    form = CommentForm()
+    context = {"post": post, "comments": comments, "form": form}
     return render(request=request,
                   template_name="blog/post/detail.html",
                   context=context)
@@ -75,4 +78,25 @@ def post_share(request, post_id):
     else:
         form = EmailPostForm()
     context = {"post": post, "form": form, "sent": sent}
-    return render(request, "blog/post/share.html", context)
+    return render(request,
+                  template_name="blog/post/share.html",
+                  context=context)
+
+
+@require_POST
+def post_comment(request, post_id):
+    post = get_object_or_404(Post,
+                             id=post_id,
+                             status=Post.Status.PUBLISHED)
+    form = CommentForm(data=request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.save()
+    else:
+        comment = None
+    
+    context = {"post": post, "form": form, "comment": comment}
+    return render(request,
+                  template_name="blog/post/comment.html",
+                  context=context)
