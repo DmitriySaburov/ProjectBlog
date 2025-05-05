@@ -56,7 +56,11 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 42b16e22dd2834e5ac39e56518cc4e3ed3a747f5
     class Meta:
         ordering = ["created"]
         indexes = [
