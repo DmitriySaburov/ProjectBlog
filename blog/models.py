@@ -25,7 +25,9 @@ class Post(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT)
+    status = models.CharField(max_length=2,
+                              choices=Status.choices,
+                              default=Status.DRAFT)
     
     # модельные менеджеры
     objects = models.Manager()
@@ -34,9 +36,7 @@ class Post(models.Model):
     
     class Meta:
         ordering = ["-publish"]
-        indexes = [
-            models.Index(fields=["-publish"]),
-        ]
+        indexes = [models.Index(fields=["-publish"])]
     
     def __str__(self):
         return self.title
@@ -48,6 +48,7 @@ class Post(models.Model):
                              self.publish.day,
                              self.slug]
                        )
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post,
@@ -62,9 +63,7 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['created']
-        indexes = [
-            models.Index(fields=['created']),
-        ]
+        indexes = [models.Index(fields=['created'])]
 
     def __str__(self):
         return f'Comment by {self.name} on {self.post}'

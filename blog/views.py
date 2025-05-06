@@ -14,10 +14,12 @@ from .forms import EmailPostForm, CommentForm
 def post_list(request, tag_slug=None):
     post_list = Post.published.all()
 
-    tag = None
+    # собираем теги
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         post_list = post_list.filter(tags=tag)
+    else:
+        tag = None
     
     # Постраничная разбивка с 3 постами на страницу
     paginator = Paginator(post_list, 3)
@@ -46,11 +48,11 @@ def post_detail(request, year, month, day, post):
     comments = post.comments.filter(active=True)
     # Форма для комментирования пользователями
     form = CommentForm()
+    
+    context = {'post': post, 'comments': comments, 'form': form}
     return render(request,
-                  'blog/post/detail.html',
-                  {'post': post,
-                   'comments': comments,
-                   'form': form})
+                  template_name='blog/post/detail.html',
+                  context=context)
 
 """
 class PostListView(ListView):
@@ -85,9 +87,11 @@ def post_share(request, post_id):
             sent = True
     else:
         form = EmailPostForm()
-    return render(request, 'blog/post/share.html', {'post': post,
-                                                    'form': form,
-                                                    'sent': sent})
+    
+    context = {'post': post, 'form': form, 'sent': sent}
+    return render(request,
+                  template_name='blog/post/share.html',
+                  context=context)
 
 
 @require_POST
@@ -95,7 +99,6 @@ def post_comment(request, post_id):
     post = get_object_or_404(Post,
                              id=post_id,
                              status=Post.Status.PUBLISHED)
-    comment = None
     # Комментарий был отправлен
     form = CommentForm(data=request.POST)
     if form.is_valid():
@@ -105,7 +108,10 @@ def post_comment(request, post_id):
         comment.post = post
         # Сохранить комментарий в базе данных
         comment.save()
-    return render(request, 'blog/post/comment.html',
-                  {'post': post,
-                   'form': form,
-                   'comment': comment})
+    else:
+        comment = None
+    
+    context = {'post': post, 'form': form, 'comment': comment}
+    return render(request,
+                  template_name='blog/post/comment.html',
+                  context=context)
