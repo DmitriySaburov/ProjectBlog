@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.mail import send_mail
 from django.views.generic import ListView
 from django.views.decorators.http import require_POST
-from django.core.mail import send_mail
 from django.conf import settings
+from django.db.models import Count
 from taggit.models import Tag
 
 from .models import Post, Comment
@@ -48,8 +49,17 @@ def post_detail(request, year, month, day, post):
     comments = post.comments.filter(active=True)
     # Форма для комментирования пользователями
     form = CommentForm()
-    
-    context = {'post': post, 'comments': comments, 'form': form}
+    # Список схожих постов
+    post_tags_ids = post.tags.values_list("id", flat=True)
+    similar_posts = Post.published.filter(tags__in=post_tags_ids)
+    similar_posts = similar_posts.exclude(id=post.id)
+    similar_posts = similar_posts.annotate(same_tags=Count("tags"))
+    similar_posts = similar_posts.order_by("-same_tags", "-publish")[:4]
+
+    context = {'post': post,
+               'comments': comments,
+               'form': form,
+               "similar_posts": similar_posts}
     return render(request,
                   template_name='blog/post/detail.html',
                   context=context)
