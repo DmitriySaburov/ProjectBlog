@@ -14,9 +14,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# идентификатор текущего сайта
+SITE_ID = 1
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -26,6 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "blog.apps.BlogConfig",
     "taggit",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
 ]
 
 MIDDLEWARE = [
@@ -92,7 +95,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us' # "ru-ru"
-
 TIME_ZONE = 'Europe/Moscow' # "UTF"
 
 USE_I18N = True
