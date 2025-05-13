@@ -1,14 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
-from django.views.generic import ListView
+# from django.views.generic import ListView - это если через класс
 from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.db.models import Count
 from taggit.models import Tag
+from django.contrib.postgres.search import SearchVector
 
-from .models import Post, Comment
-from .forms import EmailPostForm, CommentForm
+from .models import Post    # нету Comment - потому-что коменты через форму
+from .forms import EmailPostForm, CommentForm, SearchForm
 
 
 
@@ -124,4 +125,22 @@ def post_comment(request, post_id):
     context = {'post': post, 'form': form, 'comment': comment}
     return render(request,
                   template_name='blog/post/comment.html',
+                  context=context)
+
+def post_search(request):
+    if "query" in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data["query"]
+            results = Post.published.annotate(
+                search=SearchVector("title", "body")
+            ).filter(search=query)
+    else:
+        form = SearchForm()
+        query = None
+        results = []
+    
+    context = {"form": form, "query": query, "results": results}
+    return render(request,
+                  template_name="blog/post/search.html",
                   context=context)
