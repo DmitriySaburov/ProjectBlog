@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "blog.apps.BlogConfig",
+    "accounts.apps.AccountsConfig",
     "taggit",
     "django.contrib.sites",
     "django.contrib.sitemaps",
@@ -138,3 +139,7 @@ EMAIL_USE_TSL = False # Используем SSL/TLS
 EMAIL_USE_SSL = True # Используем SSL для защиты
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
+
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
