@@ -142,4 +142,7 @@ SERVER_EMAIL = EMAIL_HOST_USER
 
 
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+# LOGOUT_REDIRECT_URL = "/"
+
+# время сессии при remember_me=True
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
