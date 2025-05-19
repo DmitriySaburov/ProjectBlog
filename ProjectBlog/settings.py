@@ -122,6 +122,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -143,6 +146,8 @@ SERVER_EMAIL = EMAIL_HOST_USER
 
 LOGIN_REDIRECT_URL = "/"
 # LOGOUT_REDIRECT_URL = "/"
+
+LOGIN_URL = "/accounts/login/"
 
 # время сессии при remember_me=True
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
