@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "django.contrib.postgres",
     "social_django",
-    "django-bootstrap5",
+    "django_bootstrap5",
 ]
 
 MIDDLEWARE = [
