@@ -1,0 +1,6 @@
+SECRET_KEY = "%_$!-+yuq-^+wioaa0&e0o+czx-m8p%oshxezgw+@j68fjdqn&"
+
+SOCIAL_AUTH_GITHUB_KEY = "Ov23liW93eJDECmX7g8N"
+SOCIAL_AUTH_GITHUB_SECRET = "a8b98d8fae232200bc741f536053b6db0830cfc1"
+
+EMAIL_HOST_PASSWORD = "xxPGaTEyeUbZcY9tVeL0"

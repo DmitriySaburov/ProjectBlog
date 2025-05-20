@@ -1,12 +1,14 @@
 from pathlib import Path
 
+import keys
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "%_$!-+yuq-^+wioaa0&e0o+czx-m8p%oshxezgw+@j68fjdqn&"
+SECRET_KEY = keys.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -97,8 +99,8 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # конфигурации социальной авторизации через github, в github создано приложение, и это его данные (идентификатор и секрет клиента)
-SOCIAL_AUTH_GITHUB_KEY = "Ov23liW93eJDECmX7g8N"
-SOCIAL_AUTH_GITHUB_SECRET = "a8b98d8fae232200bc741f536053b6db0830cfc1"
+SOCIAL_AUTH_GITHUB_KEY = keys.SOCIAL_AUTH_GITHUB_KEY
+SOCIAL_AUTH_GITHUB_SECRET = keys.SOCIAL_AUTH_GITHUB_SECRET
 
 
 # Password validation
@@ -150,7 +152,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # конфигурация сервера электронной почты
 EMAIL_HOST = "smtp.mail.ru"
 EMAIL_HOST_USER = "dmitriy.saburov94@mail.ru"
-EMAIL_HOST_PASSWORD = "xxPGaTEyeUbZcY9tVeL0"
+EMAIL_HOST_PASSWORD = keys.EMAIL_HOST_PASSWORD
 EMAIL_PORT = 465
 EMAIL_USE_TSL = False # Используем SSL/TLS
 EMAIL_USE_SSL = True # Используем SSL для защиты
