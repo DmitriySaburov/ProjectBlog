@@ -6,8 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-from .__key__ import SECRET_KEY
-SECRET_KEY = SECRET_KEY
+SECRET_KEY = "%_$!-+yuq-^+wioaa0&e0o+czx-m8p%oshxezgw+@j68fjdqn&"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,6 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.postgres",
+    "social_django",
 ]
 
 MIDDLEWARE = [
@@ -52,9 +52,12 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                "django.template.context_processors.debug",
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -85,6 +88,17 @@ DATABASES = {
         "PORT": "5432",
     }
 }
+
+# аутентификация
+AUTHENTICATION_BACKENDS = (
+    "social_core.backends.github.GithubOAuth2",
+    "social_core.backends.google.GoogleOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
+# конфигурации социальной авторизации через github, в github создано приложение, и это его данные (идентификатор и секрет клиента)
+SOCIAL_AUTH_GITHUB_KEY = "Ov23liW93eJDECmX7g8N"
+SOCIAL_AUTH_GITHUB_SECRET = "a8b98d8fae232200bc741f536053b6db0830cfc1"
 
 
 # Password validation
