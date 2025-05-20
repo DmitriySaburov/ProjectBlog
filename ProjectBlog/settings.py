@@ -1,6 +1,12 @@
+import os
+
 from pathlib import Path
 
-import keys
+from dotenv import load_dotenv
+
+
+# загружаем переменные окружеия из файла .env
+load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -8,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = keys.SECRET_KEY
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -99,8 +105,11 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # конфигурации социальной авторизации через github, в github создано приложение, и это его данные (идентификатор и секрет клиента)
-SOCIAL_AUTH_GITHUB_KEY = keys.SOCIAL_AUTH_GITHUB_KEY
-SOCIAL_AUTH_GITHUB_SECRET = keys.SOCIAL_AUTH_GITHUB_SECRET
+SOCIAL_AUTH_GITHUB_KEY = os.getenv("SOCIAL_AUTH_GITHUB_KEY")
+SOCIAL_AUTH_GITHUB_SECRET = os.getenv("SOCIAL_AUTH_GITHUB_SECRET")
+# для Google
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 
 
 # Password validation
@@ -152,7 +161,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # конфигурация сервера электронной почты
 EMAIL_HOST = "smtp.mail.ru"
 EMAIL_HOST_USER = "dmitriy.saburov94@mail.ru"
-EMAIL_HOST_PASSWORD = keys.EMAIL_HOST_PASSWORD
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 465
 EMAIL_USE_TSL = False # Используем SSL/TLS
 EMAIL_USE_SSL = True # Используем SSL для защиты
