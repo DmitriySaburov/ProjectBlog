@@ -1,23 +1,25 @@
 {% extends "blog/base.html" %}
+
 {% block title %}Profile Page{% endblock title %}
+
 {% block content %}
     <div>
         <img src="{{ user.profile.avatar.url }}" style="cursor: pointer;">
     </div>
+
     {% if user_form.errors %}
-        <div role="alert">
-            <div>
+        <div class="container d-flex align-items-center justify-content-center">
+            <div class="alert alert-warning alert-dismissible fade show w-50 d-block" role="alert">
                 {% for key, value in user_form.errors.items %}
                     <strong>{{ value }}</strong>
-                {% endfor %}   
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <button type="button" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
         </div>
     {% endif %}
+
     <div class="form-content">
-        <form method="post" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div>
                 <div>
@@ -40,7 +42,7 @@
                     {{ profile_form.bio }}
                 </div>
             </div>
-            <br><br>
+            <br>
             <button type="submit">Save Changes</button>
             <button type="reset">Reset</button>
         </form>
