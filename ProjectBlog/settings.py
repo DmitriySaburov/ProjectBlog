@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "blog.apps.BlogConfig",
+    "blog_api.apps.BlogApiConfig",
     "accounts.apps.AccountsConfig",
     "taggit",
     "django.contrib.sites",
@@ -40,7 +41,18 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
     "social_django",
     "django_bootstrap5",
+    "rest_framework",
+    "django_filters",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
