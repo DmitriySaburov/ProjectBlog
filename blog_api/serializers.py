@@ -22,6 +22,10 @@ class CommentSerializer(serializers.Serializer):
 """
 
 class PostSerializer(serializers.ModelSerializer):
+    author = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+    
     class Meta:
         model = Post
         fields = ("id", "author", "title", "body", "created", "status", "slug", )

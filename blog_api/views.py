@@ -1,12 +1,15 @@
-from django.http import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+# from django.http import Http404
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
+# from rest_framework import status
 from rest_framework import generics
+# from rest_framework import permissions
 from django_filters.rest_framework import DjangoFilterBackend
 
 from blog.models import Post
 from .serializers import PostSerializer
+from .permissions import IsAuthorOrReadOnly
+
 
 
 """
@@ -26,6 +29,7 @@ class PostList(APIView):
                         status=status.HTTP_400_BAD_REQUEST)
 """
 class PostList(generics.ListCreateAPIView):
+    permission_classes = (IsAuthorOrReadOnly, )
     serializer_class = PostSerializer
     queryset = Post.objects.all()
     filter_backends = [DjangoFilterBackend]
@@ -70,12 +74,14 @@ class PostDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 """
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthorOrReadOnly, )
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 
 class UserPostList(generics.ListAPIView):
     serializer_class = PostSerializer
+    permission_classes = (IsAuthorOrReadOnly, )
     
     def get_queryset(self):
         user = self.kwargs["id"]
