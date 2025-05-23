@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "blog.apps.BlogConfig",
-    "blog_api.apps.BlogApiConfig",
     "accounts.apps.AccountsConfig",
     "taggit",
     "django.contrib.sites",
@@ -41,9 +40,12 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
     "social_django",
     "django_bootstrap5",
+    # for API
     "rest_framework",
+    "blog_api.apps.BlogApiConfig",
     "django_filters",
     "rest_framework.authtoken",
+    "drf_spectacular",
 ]
 
 REST_FRAMEWORK = {
@@ -60,6 +62,13 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Blog API Project",
+    "DESCRIPTION": "A sample blog to learn about DRF",
+    "VERSION": "1.0.0",
 }
 
 MIDDLEWARE = [
