@@ -5,7 +5,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
-# загружаем переменные окружеия из файла .env
+# загружаем переменные окружения из файла .env
 load_dotenv()
 
 
