@@ -1,3 +1,4 @@
 .env
 __pycache__/
 .venvProjectBlog/
+db.sqlite3
