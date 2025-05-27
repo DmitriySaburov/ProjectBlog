@@ -103,11 +103,13 @@ class UpdateUserForm(forms.ModelForm):
 
 class UpdateProfileForm(forms.ModelForm):
     avatar = forms.ImageField(
+        required=False,
         widget=forms.FileInput(
             attrs={"class": "form-control mb-1"}
         )
     )
     bio = forms.CharField(
+        required=False,
         widget=forms.Textarea(
             attrs={"class": "form-control"}
         )

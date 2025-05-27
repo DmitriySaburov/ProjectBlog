@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 # from django.views.generic import ListView - это если через класс
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.db.models import Count
 from taggit.models import Tag
@@ -75,6 +76,7 @@ class PostListView(ListView):
     template_name = "blog/post/list.html"
 """
 
+@login_required
 def post_share(request, post_id):
     # Извлечь пост по его идентификатору id
     post = get_object_or_404(Post,
