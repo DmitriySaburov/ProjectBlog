@@ -19,7 +19,15 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost", "127.0.0.1",
+    "blog-project.dmitriysaburov.ru", "185.250.44.25",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://blog-project.dmitriysaburov.ru",
+    "https://blog-project.dmitriysaburov.ru",
+]
 
 # идентификатор текущего сайта
 SITE_ID = 1
@@ -175,6 +183,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = 'static/'
 
 MEDIA_ROOT = BASE_DIR / "media"
