@@ -17,17 +17,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = [
-    "localhost", "127.0.0.1",
-    "blog-project.dmitriysaburov.ru", "185.250.44.25",
-]
+# ALLOWED_HOSTS = [
+#     "localhost", "127.0.0.1",
+#     "blog-project.dmitriysaburov.ru", "185.250.44.25",
+# ]
+if os.getenv('ALLOWED_HOSTS'):
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').replace(' ', '').split(',')
+else:
+    ALLOWED_HOSTS = []
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://blog-project.dmitriysaburov.ru",
-    "https://blog-project.dmitriysaburov.ru",
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     "http://blog-project.dmitriysaburov.ru",
+#     "https://blog-project.dmitriysaburov.ru",
+# ]
+if os.getenv('CSRF_TRUSTED_ORIGINS'):
+    CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').replace(' ', '').split(',')
 
 # идентификатор текущего сайта
 SITE_ID = 1
@@ -124,14 +131,24 @@ DATABASES = {
 }
 """
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "blog",
+#         "USER": "blog",
+#         "PASSWORD": "blogpassword",
+#         "HOST": "127.0.0.1",
+#         "PORT": "5432",
+#     }
+# }
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "blog",
-        "USER": "blog",
-        "PASSWORD": "blogpassword",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+    'default': {
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
@@ -197,6 +214,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # для отправки писем по электронной почте
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+"""
 # конфигурация сервера электронной почты
 EMAIL_HOST = "smtp.mail.ru"
 EMAIL_HOST_USER = "dmitriy.saburov94@mail.ru"
@@ -204,6 +222,15 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 465
 EMAIL_USE_TSL = False # Используем SSL/TLS
 EMAIL_USE_SSL = True # Используем SSL для защиты
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+"""
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '465'))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'False') == 'True'
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'False') == 'True'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 
